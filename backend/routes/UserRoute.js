@@ -29,12 +29,13 @@ Route.post('/signUp', async (req, res) => {
     try {
         const generated_token = JWTtoken(NewUser)
         const final_token = `Bearer ${generated_token}`
+
         res.status(200).json({
             message: `Congratulation You have created an account, ${firstname}`,
             token: final_token
         })
     } catch (error) {
-res.status(400).json("erroe")
+        res.status(400).json("erroe")
     }
 
 })
@@ -51,14 +52,16 @@ Route.post('/signIn', async (req, res) => {
     if (!userExist) {
         return res.status(400).json("User doesnot Exist.")
     }
-    
-    try{
+
+    try {
         const generated_token = JWTtoken(userExist)
         const final_token = `Bearer ${generated_token}`
-        res.status(200).json({ mesage: `You Logged In.`,
-            token :  final_token })
+        res.status(200).json({
+            mesage: `You Logged In.`,
+            token: final_token
+        })
 
-    }catch(err){
+    } catch (err) {
         res.status(403).json({})
     }
 
@@ -66,38 +69,43 @@ Route.post('/signIn', async (req, res) => {
 })
 
 // update the porfile firtname, lastname and password.
-Route.put('/update', authMiddlewares, async (req, res)=>{
+Route.put('/update', authMiddlewares, async (req, res) => {
     const data = req.body
     const parsed = UpdateSchema.safeParse(data)
-    if(!parsed.success){
+    if (!parsed.success) {
         return res.status(411).json("Bad Inputs")
     }
-    await User.updateOne({_id:req.id}, data)
-    res.status(200).json({message : "Updated Successfully"})
+    await User.updateOne({ _id: req.id }, data)
+    res.status(200).json({ message: "Updated Successfully" })
 })
 
-Route.get('/bulk', async(req, res)=>{
-    const filter = req.query.filter || "" 
+Route.get('/bulk', async (req, res) => {
+    const filter = req.query.filter || ""
     const users = await User.find({
-        $or : [{
-            firstname : {
-                $regex : filter
+        $or: [{
+            firstname: {
+                $regex: filter
             }
-        },{
-            lastname : {
-                $regex : filter
+        }, {
+            lastname: {
+                $regex: filter
             }
         }]
     })
 
-    res.status(200).json({                                    
-        user : users.map(user =>({
-            email : user.email,
-            firstname : user.firstname,
-            lastname : user.lastname,
-            _id : user._id
+    res.status(200).json({
+        user: users.map(user => ({
+            email: user.email,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            _id: user._id
         }))
     })
 })
 
+
+// Route.get('/profile', authMiddlewares, async (req, res) => {
+//     const user = await User.findById(req.user.id)
+//     res.json({ user });
+// })
 module.exports = Route

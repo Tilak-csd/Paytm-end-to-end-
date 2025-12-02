@@ -22,6 +22,7 @@ const SignInSchema = zod.object({
     email: zod.email(),
     password: zod.string().min(8)
 })
+
 const SignUpSchema = zod.object({
     firstname: zod.string(),
     lastname: zod.string(),
@@ -29,6 +30,7 @@ const SignUpSchema = zod.object({
     email: zod.email(),
     password: zod.string().min(8)
 })
+
 const UpdateSchema = zod.object({
     firstname : zod.string(),
     lastname : zod.string(),
