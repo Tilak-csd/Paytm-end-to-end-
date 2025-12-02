@@ -1,6 +1,6 @@
 const { JWTverify, JWTtoken } = require('../utils/jwt')
 
-function signInmiddlewares(req, res, next) {
+function authMiddlewares(req, res, next) {
 
     const user_header = req.headers['authorization']
     if (!user_header) {
@@ -14,12 +14,14 @@ function signInmiddlewares(req, res, next) {
     }
     try {
         const verfied = JWTverify(token)
-        if(!verfied){
-            res.status(400).json({message : "Wrong Token"})
+        if (!verfied) {
+            res.status(400).json({ message: "Wrong Token" })
         }
         next()
 
     } catch (error) {
-        res.status(404).json({ message: "error" })
+        res.status(404).json({ message: error })
     }
 }
+
+module.exports = {authMiddlewares}
