@@ -3,7 +3,7 @@ const { JWTverify, JWTtoken } = require('../utils/jwt')
 function authMiddlewares(req, res, next) {
 
     const user_header = req.headers['authorization']
-    if (!user_header) {
+    if (!user_header || !user_header.startsWith('Bearer ')) {
         return res.status(500).json({ message: "No Header" })
     }
 
@@ -17,6 +17,7 @@ function authMiddlewares(req, res, next) {
         if (!verfied) {
             res.status(400).json({ message: "Wrong Token" })
         }
+        req.id = verfied.id
         next()
 
     } catch (error) {
