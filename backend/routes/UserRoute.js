@@ -72,12 +72,32 @@ Route.put('/update', authMiddlewares, async (req, res)=>{
     if(!parsed.success){
         return res.status(411).json("Bad Inputs")
     }
-
     await User.updateOne({_id:req.id}, data)
     res.status(200).json({message : "Updated Successfully"})
-
-
 })
 
+Route.get('/bulk', async(req, res)=>{
+    const filter = req.query.filter || "" 
+    const users = await User.find({
+        $or : [{
+            firstname : {
+                $regex : filter
+            }
+        },{
+            lastname : {
+                $regex : filter
+            }
+        }]
+    })
+
+    res.status(200).json({                                    
+        user : users.map(user =>({
+            email : user.email,
+            firstname : user.firstname,
+            lastname : user.lastname,
+            _id : user._id
+        }))
+    })
+})
 
 module.exports = Route
