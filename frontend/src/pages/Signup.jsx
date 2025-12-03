@@ -1,80 +1,27 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import Heading from '../components/Heading'
+import Subheading from '../components/Subheading'
+import InputBox from '../components/InputBox'
+import Button from '../components/Button'
+import BottomWarning from '../components/BottomWarning'
 
 export default function Signup() {
-    const [firstname, setFirstname] = useState("")
-    const [lastname, setLastname] = useState("")
-    const [password, setPassword] = useState("")
-    const [phonenumber, setPhonenumber] = useState("")
-    const [email, setEmail] = useState("")
-    const [submit, setSubmit] = useState(0)
-    
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const res = await axios.post('http://localhost:3000/user/signUp', {
-    //                 firstname: firstname,
-    //                 lastname: lastname,
-    //                 email: email,
-    //                 password: password,
-    //                 phonenumber: phonenumber
-    //             }, {
-    //                 headers: {
-    //                     'Content-Type': 'application/json'
-    //                 }
-    //             })
-    //             console.log("success crerat account", res.data);
-    //         } catch (err) {
-    //             console.log("Error in SignUp", err);
-
-    //         }
-    //     }
-    //     fetchData()
-
-    // }, [submit])
-
     return (
-        <div>
-            <h1> SignUpCard </h1>
-            <Firstname setFirstname={setFirstname} />
-            <Lastname setLastname={setLastname} />
-            <Email setEmail={setEmail} />
-            <Phonenumber setPhonenumber={setPhonenumber} />
-            <Password setPassword={setPassword} />
-            <button onClick={()=>{
-                setSubmit(prev => prev + 1)
-            }} >Submit</button>
+        <div className='flex justify-center items-center bg-sky-300 w-full h-screen'>
+            <div className='w-[25%] p-10 bg-white rounded-xl'>
+                <Heading label={"Sign Up"} />
+                <Subheading label={"Create your account and send money or lend money through Paytm."} />
+                <InputBox placeholder={"Tilak"} label={"First Name"} />
+                <InputBox placeholder={"Gubhaju"} label={"Last Name"} />
+                <InputBox placeholder={"abc@gmail.com"} label={"Email"} />
+                <InputBox placeholder={"9812345678"} label={"Phone Number"} />
+                <InputBox placeholder={"password"} label={"Password"} />
+                <div className='my-3'>
+                <Button label={"Sign Up"} />
+                </div>
+                <BottomWarning label={"Already have an account."} buttonText={"Sign In"} to={'/signin'} />
+
+            </div>
         </div>
     )
-}
-
-function Firstname({ setFirstname }) {
-    return <input type="text" placeholder='Firstname'
-        onChange={(e) => setFirstname(e.target.value)}
-    />
-}
-
-function Lastname({ setLastname }) {
-    return <input type="text" placeholder='Lastname'
-        onChange={(e) => setLastname(e.target.value)}
-    />
-}
-
-function Email({ setEmail }) {
-    return <input type="text" placeholder='Email'
-        onChange={(e) => setEmail(e.target.value)}
-    />
-}
-
-function Phonenumber({ setPhonenumber }) {
-    return <input type="text" placeholder='Phonenumber'
-        onChange={(e) => setPhonenumber(e.target.value)}
-    />
-}
-
-function Password({ setPassword }) {
-    return <input type="text" placeholder='Password'
-        onChange={(e) => setPassword(e.target.value)}
-    />
 }

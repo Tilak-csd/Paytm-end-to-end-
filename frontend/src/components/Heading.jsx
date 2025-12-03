@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Heading({title}) {
+export default function Heading({label}) {
   return (
-    <div className='text-2xl text-black text-center'>
-      {title}
+    <div className='text-3xl font-medium text-black text-center'>
+      {label}
     </div>
   )
 }
