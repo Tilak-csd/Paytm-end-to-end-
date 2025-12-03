@@ -16,7 +16,7 @@ export default function SendMoney() {
           <input type="text" className='border-1 border-gray-400 w-full py-1 px-3 outline-0 mt-1' name="" id="" placeholder='xxxxx' />
         </div>
 
-        <button className='w-full mt-3 py-2 bg-green-500 text-white text-xl font-bold cursor-pointer hover:text-gray-300 hover:bg-green-600'>Send</button>
+        <button className='w-full mt-3 py-1 bg-green-500 text-white text-md font-medium cursor-pointer hover:text-gray-300 hover:bg-green-600'>Initilize Transfer</button>
       </div>
 
     </div>
