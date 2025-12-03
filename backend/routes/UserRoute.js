@@ -1,6 +1,6 @@
 const express = require("express")
 const Route = express.Router()
-const { User, SignInSchema, SignUpSchema, UpdateSchema } = require('../db')
+const { User, Account, SignInSchema, SignUpSchema, UpdateSchema } = require('../db')
 const { authMiddlewares } = require('../middlewares/middlewares')
 const { JWTtoken } = require('../utils/jwt')
 
@@ -26,6 +26,13 @@ Route.post('/signUp', async (req, res) => {
     })
 
     await NewUser.save()
+
+    const UserId = NewUser._id
+    await  Account.create({
+        userId : UserId,
+        balance: 1 + (Math.random() * 1000)
+    })
+
     try {
         const generated_token = JWTtoken(NewUser)
         const final_token = `Bearer ${generated_token}`
@@ -104,8 +111,4 @@ Route.get('/bulk', async (req, res) => {
 })
 
 
-// Route.get('/profile', authMiddlewares, async (req, res) => {
-//     const user = await User.findById(req.user.id)
-//     res.json({ user });
-// })
 module.exports = Route

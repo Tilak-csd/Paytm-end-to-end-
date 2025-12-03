@@ -6,14 +6,6 @@ dotenv.config()
 const db_link = process.env.MONGOOSE_SERVER
 mongoose.connect(db_link)
 
-const UserSchema = new mongoose.Schema({
-    firstname: String,
-    lastname: String,
-    email: String,
-    password: String,
-    phonenumber: Number
-})
-
 
 const SignInSchema = zod.object({
     firstname: zod.string(),
@@ -38,6 +30,29 @@ const UpdateSchema = zod.object({
     password : zod.string().min(8)
 })
 
-const User = mongoose.model("User", UserSchema)
 
-module.exports = { User, SignInSchema, SignUpSchema, UpdateSchema }
+const UserSchema = new mongoose.Schema({
+    firstname: String,
+    lastname: String,
+    email: String,
+    password: String,
+    phonenumber: Number
+})
+
+
+const AccountSchema = new mongoose.Schema({
+    userId : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'User',
+        required :true
+    },
+    balance :{
+        type : Number,
+        required : true
+    }
+})
+
+const User = mongoose.model("User", UserSchema)
+const Account = mongoose.model('Account', AccountSchema)
+
+module.exports = { User, Account, SignInSchema, SignUpSchema, UpdateSchema }
