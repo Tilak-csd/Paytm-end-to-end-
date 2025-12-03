@@ -29,7 +29,7 @@ Route.post('/transfer', authMiddlewares, async (req, res) => {
         const Id = req.id
         const SendAccount = await Account.findOne({ userId: Id }).session(session)
 
-        if (!SendAccount || SendinAccount.balance < amount) {
+        if (!SendAccount || SendAccount.balance < amount) {
             session.abortTransaction()
             return res.status(400).json({ message: "Insufficiant balance " })
         }
@@ -45,6 +45,10 @@ Route.post('/transfer', authMiddlewares, async (req, res) => {
         await Account.updateOne({ userId: Id }, { $inc: {balance : -amount }}).session(session)
         await Account.updateOne({ userId: toAccount }, { $inc: {balance : amount } }).session(session)
 
+        await session.commitTransaction()
+        res.status(200).json({
+            message : `Rs. ${amount} is Transfer to ${RecieveAccount.userId}`
+        })
 
     }catch (err) {
     console.log("error in performing transaction", err)

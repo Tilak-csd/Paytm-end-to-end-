@@ -10,29 +10,29 @@ export default function SignUpCard() {
     const [email, setEmail] = useState("")
     const [submit, setSubmit] = useState(0)
     
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.post('http://localhost:3000/user/signUp', {
-                    firstname: firstname,
-                    lastname: lastname,
-                    email: email,
-                    password: password,
-                    phonenumber: phonenumber
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                console.log("success crerat account", res.data);
-            } catch (err) {
-                console.log("Error in SignUp", err);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const res = await axios.post('http://localhost:3000/user/signUp', {
+    //                 firstname: firstname,
+    //                 lastname: lastname,
+    //                 email: email,
+    //                 password: password,
+    //                 phonenumber: phonenumber
+    //             }, {
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 }
+    //             })
+    //             console.log("success crerat account", res.data);
+    //         } catch (err) {
+    //             console.log("Error in SignUp", err);
 
-            }
-        }
-        fetchData()
+    //         }
+    //     }
+    //     fetchData()
 
-    }, [submit])
+    // }, [submit])
 
     return (
         <div>
