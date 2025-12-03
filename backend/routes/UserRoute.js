@@ -1,12 +1,13 @@
 const express = require("express")
+
 const Route = express.Router()
 const { User, Account, SignInSchema, SignUpSchema, UpdateSchema } = require('../db')
 const { authMiddlewares } = require('../middlewares/middlewares')
 const { JWTtoken } = require('../utils/jwt')
 
-Route.post('/signUp', async (req, res) => {
-    const { firstname, lastname, email, phonenumber, password } = req.body
-    const parsed = SignUpSchema.safeParse({ firstname, lastname, email, phonenumber, password })
+Route.post('/signup', async (req, res) => {
+    const { firstname, lastname, email, password } = req.body
+    const parsed = SignUpSchema.safeParse({ firstname, lastname, email, password })
 
     if (!parsed.success) {
         return res.status(404).json({ message: "Bad Inputs" })
@@ -17,17 +18,15 @@ Route.post('/signUp', async (req, res) => {
         return res.status(400).json("User Already Exist.")
     }
 
-    const NewUser = await new User({
-        firstname,
-        lastname,
-        email,
-        phonenumber,
-        password
+    const NewUser = await User.create({
+        firstname : firstname,
+        lastname : lastname,
+        email : email,
+        password : password
     })
 
-    await NewUser.save()
-
     const UserId = NewUser._id
+
     await  Account.create({
         userId : UserId,
         balance: 1 + (Math.random() * 10000)
@@ -36,7 +35,6 @@ Route.post('/signUp', async (req, res) => {
     try {
         const generated_token = JWTtoken(NewUser)
         const final_token = `Bearer ${generated_token}`
-
         res.status(200).json({
             message: `Congratulation You have created an account, ${firstname}`,
             token: final_token
@@ -47,9 +45,9 @@ Route.post('/signUp', async (req, res) => {
 
 })
 
-Route.post('/signIn', async (req, res) => {
-    const { firstname, lastname, email, phonenumber, password } = req.body
-    const parsed = SignInSchema.safeParse({ firstname, lastname, email, phonenumber, password })
+Route.post('/signin', async (req, res) => {
+    const { firstname, lastname, email, password } = req.body
+    const parsed = SignInSchema.safeParse({ firstname, lastname, email, password })
 
     if (!parsed.success) {
         return res.status(404).json({ message: "Bad Inputs" })

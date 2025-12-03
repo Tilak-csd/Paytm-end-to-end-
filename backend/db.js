@@ -4,13 +4,12 @@ const dotenv = require('dotenv');
 dotenv.config()
 
 const db_link = process.env.MONGOOSE_SERVER
-mongoose.connect(db_link)
+mongoose.connect('mongodb+srv://tilak:1234567890@cluster0.mlaafeg.mongodb.net/Paytm')
 
 
 const SignInSchema = zod.object({
     firstname: zod.string(),
     lastname: zod.string(),
-    phonenumber: zod.string(),
     email: zod.email(),
     password: zod.string().min(8)
 })
@@ -18,7 +17,6 @@ const SignInSchema = zod.object({
 const SignUpSchema = zod.object({
     firstname: zod.string(),
     lastname: zod.string(),
-    phonenumber: zod.string(),
     email: zod.email(),
     password: zod.string().min(8)
 })
@@ -26,7 +24,6 @@ const SignUpSchema = zod.object({
 const UpdateSchema = zod.object({
     firstname : zod.string(),
     lastname : zod.string(),
-    phonenumber : zod.string(),
     password : zod.string().min(8)
 })
 
@@ -36,7 +33,6 @@ const UserSchema = new mongoose.Schema({
     lastname: String,
     email: String,
     password: String,
-    phonenumber: Number
 })
 
 
