@@ -4,8 +4,10 @@ const dotenv = require('dotenv');
 dotenv.config()
 
 const db_link = process.env.MONGOOSE_SERVER
-mongoose.connect('mongodb+srv://tilak:1234567890@cluster0.mlaafeg.mongodb.net/Paytm')
-
+// PC
+// mongoose.connect('mongodb+srv://tilak:1234567890@cluster0.mlaafeg.mongodb.net/Paytm')
+// Laptop
+mongoose.connect('mongodb+srv://admin:admin@cluster0.mlaafeg.mongodb.net/Paytm')
 
 const SignInSchema = zod.object({
     firstname: zod.string(),
