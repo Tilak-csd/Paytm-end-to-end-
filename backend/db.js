@@ -10,8 +10,6 @@ const db_link = process.env.MONGOOSE_SERVER
 mongoose.connect('mongodb+srv://admin:admin@cluster0.mlaafeg.mongodb.net/Paytm')
 
 const SignInSchema = zod.object({
-    firstname: zod.string(),
-    lastname: zod.string(),
     email: zod.email(),
     password: zod.string().min(8)
 })

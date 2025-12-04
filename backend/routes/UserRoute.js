@@ -46,14 +46,14 @@ Route.post('/signup', async (req, res) => {
 })
 
 Route.post('/signin', async (req, res) => {
-    const { firstname, lastname, email, password } = req.body
-    const parsed = SignInSchema.safeParse({ firstname, lastname, email, password })
+    const {email, password } = req.body
+    const parsed = SignInSchema.safeParse({ email, password })
 
     if (!parsed.success) {
         return res.status(404).json({ message: "Bad Inputs" })
     }
 
-    const userExist = await User.findOne({ firstname, lastname })
+    const userExist = await User.findOne({ email, password })
     if (!userExist) {
         return res.status(400).json("User doesnot Exist.")
     }

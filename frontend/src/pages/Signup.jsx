@@ -4,7 +4,8 @@ import Subheading from '../components/Subheading'
 import InputBox from '../components/InputBox'
 import Button from '../components/Button'
 import BottomWarning from '../components/BottomWarning'
-
+import axios from 'axios'
+import { useState } from 'react'
 
 export default function Signup() {
     const [firstname, setFirstname] = useState("")
@@ -35,6 +36,16 @@ export default function Signup() {
                 }} />
                 <div className='my-3'>
                     <Button label={"Sign Up"}
+                    onClick={async ()=>{
+                        const response = await axios.post('http://localhost:3000/api/v1/user/signup',{
+                            firstname,
+                            lastname,
+                            email,
+                            password
+                        })
+                        await localStorage.setItem('token', response.data.token)
+                    }
+                    }
                      />
                 </div>
                 <BottomWarning label={"Already have an account."} buttonText={"Sign In"} to={'/signin'} />
