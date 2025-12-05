@@ -61,22 +61,62 @@ It is a learning & demonstration project to show end-to-end integration: fronten
 ---
 
 ## 📂 Repository Structure
+```
+Paytm-end-to-end/
+│
+├── backend/
+│   ├── middlewares/
+│   ├── node_modules/
+│   ├── routes/
+│   │   ├── AccountRoute.js
+│   │   ├── index.js
+│   │   └── UserRoute.js
+│   ├── utils/
+│   │   └── jwt.js
+│   ├── db.js
+│   ├── index.js
+│   ├── package-lock.json
+│   └── package.json
+│
+└── frontend/
+    ├── node_modules/
+    ├── public/
+    ├── src/
+    │   ├── assets/
+    │   ├── components/
+    │   │   ├── AppBar.jsx
+    │   │   ├── Balance.jsx
+    │   │   ├── BottomWarning.jsx
+    │   │   ├── Button.jsx
+    │   │   ├── Heading.jsx
+    │   │   ├── InputBox.jsx
+    │   │   ├── Subheading.jsx
+    │   │   └── User.jsx
+    │   ├── hooks/
+    │   │   └── debounces.js
+    │   ├── pages/
+    │   │   ├── Dashboard.jsx
+    │   │   ├── SendMoney.jsx
+    │   │   ├── Signin.jsx
+    │   │   ├── Signup.jsx
+    │   │   └── SuccessTransfer.jsx
+    │   ├── App.css
+    │   ├── App.jsx
+    │   └── main.jsx
+    ├── store/
+    ├── .gitignore
+    ├── index.css
+    ├── index.html
+    ├── package-lock.json
+    ├──package.json
+    ├── .gitignore
+    ├── eslint.config.js
+    ├── README.md
+    └── vite.config.js
 
 ```
-/
-├── frontend/         # Client‑side application (UI)
-│   ├── src/          # React components / assets / logic
-│   └── package.json  # Frontend dependencies & scripts
-├── backend/          # Server‑side application (API + DB)
-│   ├── routes/       # API route definitions
-│   ├── controllers/  # Request handlers / business logic
-│   ├── models/       # Database models / schemas
-│   └── package.json  # Backend dependencies & scripts
-├── .gitignore
-└── README.md         # ← this file
-```
 
-> This structure follows the common “frontend + backend” architecture for full‑stack apps. :contentReference[oaicite:2]{index=2}
+> This structure follows the common “frontend + backend” architecture for full‑stack apps. 
 
 ---
 
