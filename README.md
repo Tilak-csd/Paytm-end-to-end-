@@ -132,9 +132,10 @@ Paytm-end-to-end/
 
 ```bash
 cd backend
-npm install           # or yarn install
-# create a .env file based on .env.example (if exists)
-npm run dev           # or `node index.js` depending on your setup
+npm install  #install the depedencies
+```
+```bash
+node index.js
 ```
 
 ### Frontend Setup
