@@ -9,8 +9,8 @@ export default function SuccessTransfer() {
     const amount = searchParam.get('amount')
     return (
         <div className='w-full flex justify-center items-center h-screen bg-amber-100'>
-            <div className='p-10 w-[30%] bg-white flex-col flex items-start justify-center gap-2'>
-                <div className='w-full text-xl font-semibold text-center text-black'>
+            <div className='p-8 w-80 sm:p-10 sm:w-120 bg-white flex-col flex items-start justify-center gap-2'>
+                <div className='w-full text-xl font-medium text-center text-black'>
                     Transaction Completed!!🎉
                 </div>
                 <div className='w-full border-1 border-gray-100 grid grid-cols-2 p-2'>
@@ -23,7 +23,7 @@ export default function SuccessTransfer() {
                     </div>
                 </div>
 
-                <button className='w-full mt-3 py-1 bg-green-500 text-white text-md font-medium cursor-pointer hover:text-gray-300 hover:bg-green-600'
+                <button className='w-full mt-3 py-2 bg-green-500 text-white text-md font-medium cursor-pointer hover:text-gray-300 hover:bg-green-600'
                     onClick={() => { navigate('/dashboard') }}
                 >Back to Dashboard</button>
             </div>

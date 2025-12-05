@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 export default function AppBar({ firstname = "", lastname = "" }) {
   const navigate = useNavigate()
   return (
-    <div className='flex justify-between w-full shadow h-15 px-10'>
-      <div className='flex flex-col justify-center h-full text-3xl font-medium ml-4 cursor-pointer'>
+    <div className='flex justify-between w-full shadow h-15 px-3'>
+      <div className='flex flex-col justify-center h-full text-2xl font-medium cursor-pointer'>
         PayTM App
       </div>
       <div className='flex items-center gap-3'>
