@@ -8,6 +8,7 @@ export default function SendMoney() {
   const [searchParam] = useSearchParams()
   const id = searchParam.get('id')
   const firstname = searchParam.get('firstname')
+  const lastname = searchParam.get('lastname')
   const [amount, setAmount] = useState(0)
   return (
     <div className='w-full flex justify-center items-center h-screen bg-amber-100'>
@@ -16,7 +17,7 @@ export default function SendMoney() {
         <div className='flex justify-center items-center gap-3 mt-10'>
           <div className='rounded-full w-10 h-10 flex justify-center items-center text-xl font-medium text-white bg-green-500'>{firstname[0].toUpperCase()}</div>
           <div className='text-xl font-semibold '>
-            {firstname}
+            {firstname} {lastname}
           </div>
         </div>
         <div className='mt-3'>
@@ -31,7 +32,7 @@ export default function SendMoney() {
         <button className='w-full mt-3 py-1 bg-green-500 text-white text-md font-medium cursor-pointer hover:text-gray-300 hover:bg-green-600'
           onClick={async () => {
             try {
-              if(amount<= 0){
+              if(amount<= 0 || !Number.isInteger(amount)){
                 return alert("Please Enter the amount to send.")
               }
               const token = localStorage.getItem('token')
@@ -43,7 +44,7 @@ export default function SendMoney() {
                   "Authorization": token
                 }
               })
-              navigate(`/successtransfer?firstname=${firstname}&amount=${amount}`)
+              navigate(`/successtransfer?firstname=${firstname}&lastname=${lastname}&amount=${amount}`)
             }
             catch (err) {
               console.log("Error while sending the money", err);

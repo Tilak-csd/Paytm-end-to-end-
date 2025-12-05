@@ -43,7 +43,7 @@ export default function User() {
                     </div>
 
                     <button className='text-center w-40 px-2 py-2 cursor-pointer bg-black text-white rounded-md'
-                        onClick={() => navigate(`/send?id=${user._id}&firstname=${user.firstname}`)}
+                        onClick={() => navigate(`/send?id=${user._id}&firstname=${user.firstname}&lastname=${user.lastname}`)}
                     >Send Money</button>
                 </div>
             })}

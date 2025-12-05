@@ -25,7 +25,6 @@ export default function Dashboard() {
     }
     FetchUser()
   }, [])
-  console.log(owner);
 
   return (
     <div className='w-full h-screen'>

@@ -37,6 +37,7 @@ export default function Signin() {
                                 localStorage.setItem('token', response.data.token)
                                 navigate('/dashboard')
                             } catch (error) {
+                                alert("Sorry! User Doesn't exist. Please try again.")
                                 console.log("Error in signin.", err);
                                 
                             }

@@ -50,6 +50,7 @@ export default function Signup() {
                                 localStorage.setItem('token', response.data.token)
                                 navigate('/dashboard')
                             } catch (error) {
+                                alert("Could not SignUp! Please try again")
                                 console.log("Error in Signup", error);
                             }
                         }
