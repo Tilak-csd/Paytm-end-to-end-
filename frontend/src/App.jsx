@@ -4,6 +4,7 @@ import Signin from './pages/Signin'
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
 import SendMoney from './pages/SendMoney'
+import SuccessTransfer from './pages/SuccessTransfer'
 
 export default function App() {
   return (
@@ -14,9 +15,10 @@ export default function App() {
         <Route path='/signin' element={<Signin />}></Route>
         <Route path='/dashboard' element={<Dashboard />}></Route>
         <Route path='/send' element={<SendMoney />}></Route>
+        <Route path='/successtransfer' element={<SuccessTransfer />}></Route>
       </Routes>
     </BrowserRouter>
-    
+
     </>
   )
 }

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 export default function SendMoney() {
+  const navigate = useNavigate()
   const [searchParam] = useSearchParams()
   const id = searchParam.get('id')
   const firstname = searchParam.get('firstname')
@@ -20,30 +22,30 @@ export default function SendMoney() {
         <div className='mt-3'>
           <p className='text-gray-500'>Enter the amount</p>
           <input type="text" className='border-1 border-gray-400 w-full py-1 px-3 outline-0 mt-1' name="" id="" placeholder='xxxxx'
-          onChange={(e)=>{
-            setAmount(parseInt(e.target.value))
-          }}
+            onChange={(e) => {
+              setAmount(parseInt(e.target.value))
+            }}
           />
         </div>
 
         <button className='w-full mt-3 py-1 bg-green-500 text-white text-md font-medium cursor-pointer hover:text-gray-300 hover:bg-green-600'
-        onClick={async ()=>{
-          try{
-            const token = localStorage.getItem('token')
-            await axios.post('http://localhost:3000/api/v1/account/transfer',{
-              toAccount : id,
-              amount : amount
-            },{
-              headers :{
-                "Authorization" : token
-              }
-            })
-           }
-            catch(err){
-              console.log("Error while sending the money",err);
-              
+          onClick={async () => {
+            try {
+              const token = localStorage.getItem('token')
+              await axios.post('http://localhost:3000/api/v1/account/transfer', {
+                toAccount: id,
+                amount: amount
+              }, {
+                headers: {
+                  "Authorization": token
+                }
+              })
+              navigate(`/successtransfer?firstname=${firstname}&amount=${amount}`)
             }
-        }}
+            catch (err) {
+              console.log("Error while sending the money", err);
+            }
+          }}
         >Initilize Transfer</button>
       </div>
 
