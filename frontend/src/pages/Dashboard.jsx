@@ -29,7 +29,7 @@ export default function Dashboard() {
   return (
     <div className='w-full h-screen'>
       <AppBar firstname={owner.firstname} lastname={owner.lastname} />
-      <div className='my-8 px-3'>
+      <div className='my-8 px-3 sm:px-10'>
         <Balance amount={owner.balance} />
         <User />
       </div>

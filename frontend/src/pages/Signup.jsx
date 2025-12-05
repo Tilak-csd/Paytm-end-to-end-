@@ -18,7 +18,7 @@ export default function Signup() {
 
     return (
         <div className='flex justify-center items-center bg-sky-300 w-full h-screen'>
-            <div className='w-80 sm:w-120 sm:p-10 p-5 bg-white rounded-xl'>
+            <div className='w-[90%] sm:w-120 sm:p-10 p-5 bg-white rounded-xl'>
                 <Heading label={"Sign Up"} />
                 <Subheading label={"Create your account and send money or lend money through Paytm."} />
                 <InputBox placeholder={"Tilak"} label={"First Name"}

@@ -28,7 +28,7 @@ export default function User() {
         , [debounceSearch, search])
     return (
         <div className='w-full flex flex-col justify-center my-5'>
-            <div className='font-semibold text-2xl'>List of Users</div>
+            <div className='font-semibold text-xl sm:text-2xl'>List of Users</div>
             {/* Seach bar */}
             <div className='mt-4'>
                 <input type="text"
@@ -40,13 +40,13 @@ export default function User() {
             {users.map((user, idx) => {
                 return <div key={idx} className='w-full flex justify-between items-center mt-3'>
                     <div className='flex items-center w-full'>
-                        <div className='rounded-full flex justify-center items-center w-12 h-12 bg-slate-200 font-medium'>
+                        <div className='rounded-full flex justify-center items-center w-10 h-10 bg-slate-200 font-medium'>
                             {user.firstname[0].toUpperCase()}
                         </div>
-                        <div className='text-xl ml-5'>{user.firstname} {user.lastname}</div>
+                        <div className='text-sm sm:text-md ml-2'>{user.firstname} {user.lastname}</div>
                     </div>
 
-                    <button className='text-center w-40 px-2 py-2 cursor-pointer bg-black text-white rounded-md'
+                    <button className='text-center sm:text-md text-sm w-35 px-2 py-2 cursor-pointer bg-black text-white rounded-md'
                         onClick={() => navigate(`/send?id=${user._id}&firstname=${user.firstname}&lastname=${user.lastname}`)}
                     >Send Money</button>
                 </div>

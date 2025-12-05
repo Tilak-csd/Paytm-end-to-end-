@@ -13,7 +13,7 @@ export default function SendMoney() {
   const [amount, setAmount] = useState(0)
   return (
     <div className='w-full flex justify-center items-center h-screen bg-amber-100'>
-      <div className=' w-80 px-8 sm:p-10 sm:w-120 py-7 bg-white flex-col flex items-start justify-center'>
+      <div className='w-[90%] px-5 sm:p-10 sm:w-120 py-7 bg-white flex-col flex items-start justify-center'>
         <div className='w-full text-2xl font-semibold text-center'>Send Money</div>
         <Subheading label={"You can send money to your friend, relatives or anyone."}></Subheading>
 

@@ -9,7 +9,7 @@ export default function SuccessTransfer() {
     const amount = searchParam.get('amount')
     return (
         <div className='w-full flex justify-center items-center h-screen bg-amber-100'>
-            <div className='p-8 w-80 sm:p-10 sm:w-120 bg-white flex-col flex items-start justify-center gap-2'>
+            <div className='p-5 w-[90%] sm:p-10 sm:w-120 bg-white flex-col flex items-start justify-center gap-2'>
                 <div className='w-full text-xl font-medium text-center text-black'>
                     Transaction Completed!!🎉
                 </div>

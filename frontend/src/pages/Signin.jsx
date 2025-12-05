@@ -14,7 +14,7 @@ export default function Signin() {
     const navigate = useNavigate()
     return (
         <div className='flex justify-center items-center bg-sky-300 w-full h-screen'>
-            <div className='w-80 sm:w-120 sm:p-10 p-5 bg-white rounded-xl'>
+            <div className='w-[90%] sm:w-120 sm:p-10 p-5 bg-white rounded-xl'>
                 <Heading label={"Sign In"} />
                 <Subheading label={"Welcome back to Paytm, Access your account."} />
                 <InputBox placeholder={"abc@gmail.com"} label={"Email"}
