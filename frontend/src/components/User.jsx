@@ -3,35 +3,39 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import axios from 'axios'
+import useDebounce from '../hooks/debounces'
 
 export default function User() {
     const navigate = useNavigate()
     const [users, setUsers] = useState([])
     const [search, setSearch] = useState("")
+    const debounceSearch = useDebounce(search, 500)
     useEffect(() => {
-        const FetchApi = async () => {
-            const token = localStorage.getItem('token')
+        if (debounceSearch) {
+            const FetchApi = async () => {
+                const token = localStorage.getItem('token')
 
-            const response = await axios.get(`http://localhost:3000/api/v1/user/bulk?filter=${search}`, {
-                headers: {
-                    'Authorization': token
-                }
-            })
-            setUsers(response.data.user || [])
+                const response = await axios.get(`http://localhost:3000/api/v1/user/bulk?filter=${search}`, {
+                    headers: {
+                        'Authorization': token
+                    }
+                })
+                setUsers(response.data.user || [])
+            }
+            FetchApi()
         }
-        FetchApi()
     }
-        , [search])
+        , [debounceSearch, search])
     return (
         <div className='w-full flex flex-col justify-center my-5'>
             <div className='font-semibold text-2xl'>List of Users</div>
             {/* Seach bar */}
             <div className='mt-4'>
                 <input type="text"
-                onChange={(e)=>{
-                    setSearch(e.target.value)
-                }}
-                placeholder='Search users....' className='outline-0 border-0 bg-slate-200 w-full rounded-md py-2 px-3 text-gray-600' />
+                    onChange={(e) => {
+                        setSearch(e.target.value)
+                    }}
+                    placeholder='Search users....' className='outline-0 border-0 bg-slate-200 w-full rounded-md py-2 px-3 text-gray-600' />
             </div>
             {users.map((user, idx) => {
                 return <div key={idx} className='w-full flex justify-between items-center mt-3'>
