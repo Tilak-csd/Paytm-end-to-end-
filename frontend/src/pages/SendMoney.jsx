@@ -31,6 +31,9 @@ export default function SendMoney() {
         <button className='w-full mt-3 py-1 bg-green-500 text-white text-md font-medium cursor-pointer hover:text-gray-300 hover:bg-green-600'
           onClick={async () => {
             try {
+              if(amount<= 0){
+                return alert("Please Enter the amount to send.")
+              }
               const token = localStorage.getItem('token')
               await axios.post('http://localhost:3000/api/v1/account/transfer', {
                 toAccount: id,

@@ -55,7 +55,7 @@ Route.post('/signin', async (req, res) => {
 
     const userExist = await User.findOne({ email, password })
     if (!userExist) {
-        return res.status(400).json("User doesnot Exist.")
+        return res.status(400).json({message: "User doesnot Exist."})
     }
 
     try {

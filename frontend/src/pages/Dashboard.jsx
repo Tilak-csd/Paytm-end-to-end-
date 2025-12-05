@@ -4,17 +4,24 @@ import Balance from '../components/Balance'
 import User from '../components/User'
 import axios from 'axios'
 
+
 export default function Dashboard() {
   const [owner, setOwner] = useState([])
   useEffect(() => {
     const FetchUser = async () => {
-      const token = localStorage.getItem('token')
-      const response = await axios.get('http://localhost:3000/api/v1/user/user', {
-        headers: {
-          'Authorization': token
-        }
-      })
-      setOwner(response.data)
+      try {
+
+        const token = localStorage.getItem('token')
+        const response = await axios.get('http://localhost:3000/api/v1/user/user', {
+          headers: {
+            'Authorization': token
+          }
+        })
+        setOwner(response.data)
+      } catch (error) {
+        console.log("Error in fetching the data");
+        
+      }
     }
     FetchUser()
   }, [])
