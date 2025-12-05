@@ -84,6 +84,20 @@ Route.put('/update', authMiddlewares, async (req, res) => {
     res.status(200).json({ message: "Updated Successfully" })
 })
 
+Route.get('/user', authMiddlewares, async(req, res)=>{
+    const userid = req.id
+    const userExist = await User.findOne({_id : userid})
+    const accountExist = await Account.findOne({userId: userid})
+    if(!userExist && !accountExist){
+        return res.status(400).json("User doesn't exist")
+    }
+    res.status(200).json({
+        firstname : userExist.firstname,
+        lastname : userExist.lastname,
+        balance : accountExist.balance
+    })
+})
+
 Route.get('/bulk', async (req, res) => {
     const filter = req.query.filter || ""
     const users = await User.find({

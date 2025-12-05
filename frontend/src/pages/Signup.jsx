@@ -43,9 +43,10 @@ export default function Signup() {
                             email,
                             password
                         })
-                        await localStorage.setItem('token', response.data.token)
+                        localStorage.setItem('token', response.data.token)
                     }
                     }
+                    
                      />
                 </div>
                 <BottomWarning label={"Already have an account."} buttonText={"Sign In"} to={'/signin'} />

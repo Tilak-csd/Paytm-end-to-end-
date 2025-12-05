@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Button({ label,onClick }) {
+export default function Button({ label, onClick }) {
     return (
         <button onClick={onClick} className='w-full py-2 cursor-pointer rounded-md bg-black text-white text-xl hover:bg-gray-700'>
             {label}
