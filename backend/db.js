@@ -5,9 +5,9 @@ dotenv.config()
 
 const db_link = process.env.MONGOOSE_SERVER
 // PC
-mongoose.connect('mongodb+srv://tilak:1234567890@cluster0.mlaafeg.mongodb.net/Paytm')
+// mongoose.connect('mongodb+srv://tilak:1234567890@cluster0.mlaafeg.mongodb.net/Paytm')
 // Laptop
-// mongoose.connect('mongodb+srv://admin:admin@cluster0.mlaafeg.mongodb.net/Paytm')
+mongoose.connect('mongodb+srv://admin:admin@cluster0.mlaafeg.mongodb.net/Paytm')
 
 const SignInSchema = zod.object({
     email: zod.email(),

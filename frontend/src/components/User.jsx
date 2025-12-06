@@ -10,22 +10,52 @@ export default function User() {
     const [users, setUsers] = useState([])
     const [search, setSearch] = useState("")
     const debounceSearch = useDebounce(search, 500)
-    useEffect(() => {
-        if (debounceSearch) {
-            const FetchApi = async () => {
-                const token = localStorage.getItem('token')
 
-                const response = await axios.get(`http://localhost:3000/api/v1/user/bulk?filter=${search}`, {
-                    headers: {
-                        'Authorization': token
-                    }
-                })
-                setUsers(response.data.user || [])
-            }
-            FetchApi()
+    // Load ALL users on first load
+    useEffect(() => {
+        const fetchAll = async () => {
+            const token = localStorage.getItem("token");
+            const response = await axios.get(
+                "http://localhost:3000/api/v1/user/bulk",
+                { headers: { Authorization: token } }
+            );
+            setUsers(response.data.user || []);
+        };
+
+        fetchAll();
+    }, []);  // 👈 only once
+
+    // Debounced search
+    useEffect(() => {
+        // If search is empty → load ALL users again
+        if (debounceSearch === "") {
+            const fetchAll = async () => {
+                const token = localStorage.getItem("token");
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/user/bulk",
+                    { headers: { Authorization: token } }
+                );
+                setUsers(response.data.user || []);
+            };
+            fetchAll();
+            return;
         }
-    }
-        , [debounceSearch, search])
+
+        // If user typed → search users
+        const fetchFiltered = async () => {
+            const token = localStorage.getItem("token");
+            const response = await axios.get(
+                `http://localhost:3000/api/v1/user/bulk?filter=${debounceSearch}`,
+                { headers: { Authorization: token } }
+            );
+            setUsers(response.data.user || []);
+        };
+
+        fetchFiltered();
+    }, [debounceSearch]);
+
+
+
     return (
         <div className='w-full flex flex-col justify-center my-5'>
             <div className='font-semibold text-xl sm:text-2xl'>List of Users</div>

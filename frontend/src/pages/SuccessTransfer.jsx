@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import { Owner } from '../store/atoms/main'
 
 export default function SuccessTransfer() {
     const navigate = useNavigate()
@@ -7,6 +9,9 @@ export default function SuccessTransfer() {
     const firstname = searchParam.get('firstname')
     const lastname = searchParam.get('lastname')
     const amount = searchParam.get('amount')
+    const owner = useRecoilValue(Owner)
+    console.log(owner);
+    
     return (
         <div className='w-full flex justify-center items-center h-screen bg-amber-100'>
             <div className='p-5 w-[90%] sm:p-10 sm:w-120 bg-white flex-col flex items-start justify-center gap-2'>
@@ -15,7 +20,7 @@ export default function SuccessTransfer() {
                 </div>
                 <div className='w-full border-1 border-gray-100 grid grid-cols-2 p-2'>
                     <div className='col-span-1 text-left'>
-                        <p className='text-md text-gray-900'>Sender: <span className='font-medium'>{firstname}</span></p>
+                        <p className='text-md text-gray-900'>Sender: <span className='font-medium'>{owner.firstname} {owner.lastname}</span></p>
                     </div>
                     <div className='col-span-1 text-right'>
                         <p className='text-md text-gray-900'>Reciever: <span className='font-medium'>{firstname} {lastname}</span></p>

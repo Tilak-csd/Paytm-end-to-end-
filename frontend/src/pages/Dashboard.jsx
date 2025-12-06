@@ -3,14 +3,16 @@ import AppBar from '../components/AppBar'
 import Balance from '../components/Balance'
 import User from '../components/User'
 import axios from 'axios'
-
+import { useRecoilState } from 'recoil'
+import { Owner } from '../store/atoms/main.js'
 
 export default function Dashboard() {
-  const [owner, setOwner] = useState([])
+  const [owner, setOwner] = useRecoilState(Owner)
+  console.log(owner);
+  
   useEffect(() => {
     const FetchUser = async () => {
       try {
-
         const token = localStorage.getItem('token')
         const response = await axios.get('http://localhost:3000/api/v1/user/user', {
           headers: {
