@@ -173,6 +173,24 @@ In the backend (and frontend if any):
 
 ---
 
+## Preview
+**Dashboard** <br />
+<img width="1366" height="647" alt="image" src="https://github.com/user-attachments/assets/efb681e9-4a5e-463e-8514-f1f657074504" />
+
+**Send Money Page**  <br />
+<img width="707" height="536" alt="image" src="https://github.com/user-attachments/assets/f4e9f298-a149-4e3b-be2f-82057e07ac29" />
+
+**Success Transfer** <br />
+<img width="679" height="437" alt="image" src="https://github.com/user-attachments/assets/28b06926-fad4-41a1-a702-6b141e5ea1d4" />
+
+**SignUp Page** <br/>
+<img width="666" height="644" alt="image" src="https://github.com/user-attachments/assets/4c72f541-ef86-4beb-a25f-00cc3d1a0dd8" />
+
+**SignIn Page** <br />
+<img width="671" height="588" alt="image" src="https://github.com/user-attachments/assets/8d7314e2-4125-4a7d-ae06-88410f52ec65" />
+
+---
+
 ## 🚧 Future Improvements / TODO
 
 - Add transaction history with timestamps  
