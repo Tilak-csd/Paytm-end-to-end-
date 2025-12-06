@@ -10,16 +10,30 @@ export default function User() {
     const [users, setUsers] = useState([])
     const [search, setSearch] = useState("")
     const debounceSearch = useDebounce(search, 500)
+    // pagination 
+    const UserperSection = 6
+    const [currentsection, setCurrentsection] = useState(1)
+    const UserlastIndex = UserperSection * currentsection
+    const UserFirstIndex = UserlastIndex - UserperSection
+    const UserCurrent = users.slice(UserFirstIndex, UserlastIndex)
+
+    // lazy loading
+    const [loading, setLoading] = useState(false)
 
     // Load ALL users on first load
     useEffect(() => {
         const fetchAll = async () => {
-            const token = localStorage.getItem("token");
-            const response = await axios.get(
-                "http://localhost:3000/api/v1/user/bulk",
-                { headers: { Authorization: token } }
-            );
-            setUsers(response.data.user || []);
+            setLoading(true)
+            try {
+                const token = localStorage.getItem("token");
+                const response = await axios.get(
+                    "http://localhost:3000/api/v1/user/bulk",
+                    { headers: { Authorization: token } }
+                );
+                setUsers(response.data.user || []);
+            } finally {
+                setLoading(false)
+            }
         };
 
         fetchAll();
@@ -43,16 +57,23 @@ export default function User() {
 
         // If user typed → search users
         const fetchFiltered = async () => {
-            const token = localStorage.getItem("token");
-            const response = await axios.get(
-                `http://localhost:3000/api/v1/user/bulk?filter=${debounceSearch}`,
-                { headers: { Authorization: token } }
-            );
-            setUsers(response.data.user || []);
+            setLoading(true)
+            try {
+                const token = localStorage.getItem("token");
+                const response = await axios.get(
+                    `http://localhost:3000/api/v1/user/bulk?filter=${debounceSearch}`,
+                    { headers: { Authorization: token } }
+                );
+                setUsers(response.data.user || []);
+            } finally {
+                setLoading(false)
+            }
         };
 
         fetchFiltered();
+        setCurrentsection(1)
     }, [debounceSearch]);
+
 
 
 
@@ -67,7 +88,10 @@ export default function User() {
                     }}
                     placeholder='Search users....' className='outline-0 border-0 bg-slate-200 w-full rounded-md py-2 px-3 text-gray-600' />
             </div>
-            {users.map((user, idx) => {
+            {/* lazy loading */}
+            {loading && <Skeleton />}
+
+            {UserCurrent.map((user, idx) => {
                 return <div key={idx} className='w-full flex justify-between items-center mt-3'>
                     <div className='flex items-center w-full'>
                         <div className='rounded-full flex justify-center items-center w-10 h-10 bg-slate-200 font-medium'>
@@ -82,7 +106,51 @@ export default function User() {
                 </div>
             })}
 
-
+            <Pagination currentsection={currentsection} UserlastIndex={UserlastIndex} user={users} setCurrentsection={setCurrentsection} />
         </div>
     )
+}
+
+
+function Pagination({ currentsection, UserlastIndex, user, setCurrentsection }) {
+    return <div className='w-full flex mt-5 justify-center items-center gap-5'>
+        <button className='cursor-pointer border py-1 rounded-2xl font-bold px-5 text-gray-800'
+            disabled={currentsection === 1}
+            style={{
+                opacity: currentsection === 1 ? 0.4 : 1,
+                pointerEvents: currentsection === 1 ? "none" : "auto",
+                cursor: currentsection === 1 ? "default" : "pointer"
+            }} onClick={() => {
+                setCurrentsection(prev => prev - 1)
+            }
+            }
+        >{'<<'}</button>
+        <button className='cursor-pointer border py-1 rounded-2xl font-bold px-5 text-gray-800'
+            disabled={UserlastIndex >= user.length}
+            style={{
+                opacity: UserlastIndex >= user.length ? 0.4 : 1,
+                pointerEvents: UserlastIndex >= user.length ? "none" : "auto",
+                cursor: UserlastIndex >= user.length ? "default" : "pointer"
+            }}
+            onClick={() => {
+                setCurrentsection(prev => prev + 1)
+            }
+            }
+
+        >{'>>'}</button>
+    </div>
+}
+
+function Skeleton() {
+    return <div className="w-full flex flex-col gap-3 mt-5">
+        {[1, 2, 3, 4, 5].map((n) => (
+            <div key={n} className="animate-pulse flex justify-between items-center">
+                <div className="flex items-center">
+                    <div className="rounded-full bg-gray-300 w-10 h-10"></div>
+                    <div className="bg-gray-300 h-4 w-32 ml-3 rounded"></div>
+                </div>
+                <div className="bg-gray-300 h-8 w-24 rounded"></div>
+            </div>
+        ))}
+    </div>
 }
