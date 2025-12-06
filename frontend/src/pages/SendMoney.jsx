@@ -35,7 +35,7 @@ export default function SendMoney() {
         <button className='w-full mt-3 py-2 bg-green-500 text-white text-md font-medium cursor-pointer hover:text-gray-300 hover:bg-green-600'
           onClick={async () => {
             try {
-              if(amount<= 0 || !Number.isInteger(amount)){
+              if(amount === 0 || !Number.isInteger(amount)){
                 return alert("Please Enter the amount to send.")
               }
               const token = localStorage.getItem('token')
@@ -50,6 +50,7 @@ export default function SendMoney() {
               navigate(`/successtransfer?firstname=${firstname}&lastname=${lastname}&amount=${amount}`)
             }
             catch (err) {
+              alert("Error while sending the Money.")
               console.log("Error while sending the money", err);
             }
           }}

@@ -5,15 +5,20 @@ import User from '../components/User'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
 import { Owner } from '../store/atoms/main.js'
+import { useNavigate } from 'react-router-dom'
 
 export default function Dashboard() {
   const [owner, setOwner] = useRecoilState(Owner)
+  const navigate = useNavigate()
   console.log(owner);
   
   useEffect(() => {
     const FetchUser = async () => {
       try {
         const token = localStorage.getItem('token')
+        if(!token){
+          navigate('/signin')
+        }
         const response = await axios.get('http://localhost:3000/api/v1/user/user', {
           headers: {
             'Authorization': token
