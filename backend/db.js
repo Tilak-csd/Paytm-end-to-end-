@@ -21,12 +21,14 @@ const SignUpSchema = zod.object({
     password: zod.string().min(8)
 })
 
-const UpdateSchema = zod.object({
+const NameSchema = zod.object({
     firstname : zod.string(),
     lastname : zod.string(),
-    password : zod.string().min(8)
 })
 
+const PasswordSchema = zod.object({
+        password : zod.string().min(8)
+})
 
 const UserSchema = new mongoose.Schema({
     firstname: String,
@@ -51,4 +53,4 @@ const AccountSchema = new mongoose.Schema({
 const User = mongoose.model("User", UserSchema)
 const Account = mongoose.model('Account', AccountSchema)
 
-module.exports = { User, Account, SignInSchema, SignUpSchema, UpdateSchema }
+module.exports = { User, Account, SignInSchema, SignUpSchema, NameSchema, PasswordSchema }

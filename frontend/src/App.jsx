@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import SendMoney from './pages/SendMoney'
 import SuccessTransfer from './pages/SuccessTransfer'
 import EditUser from './pages/EditUser'
+import Changepassword from './pages/Changepassword'
 import { RecoilRoot } from 'recoil'
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
             <Route path='/send' element={<SendMoney />}></Route>
             <Route path='/successtransfer' element={<SuccessTransfer />}></Route>
             <Route path='/edituser' element={<EditUser />} ></Route>
+            <Route path='/changepassword' element={<Changepassword />} ></Route>
           </Routes>
         </BrowserRouter>
       </RecoilRoot>

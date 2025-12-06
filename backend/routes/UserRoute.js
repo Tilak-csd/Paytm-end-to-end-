@@ -1,7 +1,7 @@
 const express = require("express")
 
 const Route = express.Router()
-const { User, Account, SignInSchema, SignUpSchema, UpdateSchema } = require('../db')
+const { User, Account, SignInSchema, SignUpSchema, NameSchema, PasswordSchema } = require('../db')
 const { authMiddlewares } = require('../middlewares/middlewares')
 const { JWTtoken } = require('../utils/jwt')
 
@@ -74,9 +74,19 @@ Route.post('/signin', async (req, res) => {
 })
 
 // update the porfile firtname, lastname and password.
-Route.put('/update', authMiddlewares, async (req, res) => {
+Route.put('/updateuser', authMiddlewares, async (req, res) => {
     const data = req.body
-    const parsed = UpdateSchema.safeParse(data)
+    const parsed = NameSchema.safeParse(data)
+    if (!parsed.success) {
+        return res.status(411).json("Bad Inputs")
+    }
+    await User.updateOne({ _id: req.id }, data)
+    res.status(200).json({ message: "Updated Successfully" })
+})
+
+Route.put('/updatepassword', authMiddlewares, async (req, res) => {
+    const data = req.body
+    const parsed = PasswordSchema.safeParse(data)
     if (!parsed.success) {
         return res.status(411).json("Bad Inputs")
     }
