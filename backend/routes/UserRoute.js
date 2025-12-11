@@ -1,4 +1,5 @@
 const express = require("express")
+const bcrypt = require("bcrypt");
 
 const Route = express.Router()
 const { User, Account, SignInSchema, SignUpSchema, NameSchema, PasswordSchema } = require('../db')
@@ -17,12 +18,13 @@ Route.post('/signup', async (req, res) => {
     if (userExist) {
         return res.status(400).json("User Already Exist.")
     }
+    const hasedPassword = await bcrypt.hash(password, 10)
 
     const NewUser = await User.create({
         firstname : firstname,
         lastname : lastname,
         email : email,
-        password : password
+        password : hasedPassword
     })
 
     const UserId = NewUser._id
@@ -53,9 +55,14 @@ Route.post('/signin', async (req, res) => {
         return res.status(404).json({ message: "Bad Inputs" })
     }
 
-    const userExist = await User.findOne({ email, password })
+    const userExist = await User.findOne({ email })
     if (!userExist) {
         return res.status(400).json({message: "User doesnot Exist."})
+    }
+
+    const isMatch = await bcrypt.compare(password, userExist.password)
+    if(!isMatch){
+        return res.status(500).json({message : "Password Don't Matched."})
     }
 
     try {
@@ -86,11 +93,12 @@ Route.put('/updateuser', authMiddlewares, async (req, res) => {
 
 Route.put('/updatepassword', authMiddlewares, async (req, res) => {
     const data = req.body
-    const parsed = PasswordSchema.safeParse(data)
+    const hasspassword = await bcrypt.hash(data, 10)
+    const parsed = PasswordSchema.safeParse(hasspassword)
     if (!parsed.success) {
         return res.status(411).json("Bad Inputs")
     }
-    await User.updateOne({ _id: req.id }, data)
+    await User.updateOne({ _id: req.id }, hasedPassword)
     res.status(200).json({ message: "Updated Successfully" })
 })
 
