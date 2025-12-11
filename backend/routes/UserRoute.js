@@ -93,12 +93,16 @@ Route.put('/updateuser', authMiddlewares, async (req, res) => {
 
 Route.put('/updatepassword', authMiddlewares, async (req, res) => {
     const data = req.body
-    const hasspassword = await bcrypt.hash(data, 10)
-    const parsed = PasswordSchema.safeParse(hasspassword)
+    console.log(data);
+    
+    const parsed = PasswordSchema.safeParse(data)
     if (!parsed.success) {
         return res.status(411).json("Bad Inputs")
     }
-    await User.updateOne({ _id: req.id }, hasedPassword)
+    const newhasedPassword = await bcrypt.hash(data.password, 10)
+    console.log(newhasedPassword);
+    
+    await User.updateOne({ _id: req.id }, {password : newhasedPassword})
     res.status(200).json({ message: "Updated Successfully" })
 })
 
