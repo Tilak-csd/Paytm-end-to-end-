@@ -6,6 +6,8 @@ import { useState } from 'react'
 export default function AppBar({ firstname = "", lastname = "", avatar = "" }) {
   const navigate = useNavigate()
   const [dropdown, setDropdown] = useState(false)
+  const validExtension = ["jpg", "png", "jpeg"]
+  const exists = validExtension.some(ext => avatar.endsWith(ext))
   return (
     <div  className='flex justify-between w-full shadow h-15 px-3 sm:px-10'>
       <div  className='flex flex-col justify-center h-full text-xl sm:text-2xl font-medium cursor-pointer'>
@@ -22,7 +24,7 @@ export default function AppBar({ firstname = "", lastname = "", avatar = "" }) {
             }}
           >
             {/* Show firstname's first letter if it exists; otherwise show '?' to avoid undefined errors. */}
-            {firstname?.[0] ?? "?"}
+            <AvatarComponent avatar={avatar} firstname={firstname} exists={exists} />
           </div>
           {dropdown && <DropdownProfile navigate={navigate} firstname={firstname}/>}
         </div>
@@ -78,4 +80,16 @@ function DropdownProfile({ navigate, firstname }) {
       <p>Change Password</p>
     </div>
   </div>
+}
+
+function AvatarComponent({ exists, avatar, firstname }) {
+  if (exists && avatar) {
+    // Correctly using an expression inside the src attribute's curly braces
+    const imgSrc = `http://localhost:3000/api/v1/uploads/${avatar}`;
+    return <img src={imgSrc} alt="User Avatar" />;
+  } else if (!exists && firstname && firstname.length > 0) {
+    return <>{firstname[0]}</>;
+  } else {
+    return <>?</>;
+  }
 }
