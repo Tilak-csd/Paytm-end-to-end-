@@ -42,6 +42,7 @@ export default function ChangeAvatar() {
 
             console.log(res.data)
             alert("Avatar Updated")
+            navigate('/dashboard')
         } catch (error) {
             console.error("failed to upload", error)
             alert("Failed to update the Avatar")

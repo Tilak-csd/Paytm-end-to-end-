@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 // This sets firstname to an empty string initially, so it never becomes undefined.
-export default function AppBar({ firstname = "", lastname = "" }) {
+export default function AppBar({ firstname = "", lastname = "", avatar = "" }) {
   const navigate = useNavigate()
   const [dropdown, setDropdown] = useState(false)
   return (
