@@ -19,7 +19,6 @@ const SignUpSchema = zod.object({
     lastname: zod.string(),
     email: zod.email(),
     password: zod.string().min(8),
-    avatar : zod.string()
 })
 
 const NameSchema = zod.object({
