@@ -119,8 +119,7 @@ Route.put('/updateAvatar', upload.single('avatar'), authMiddlewares, async(req, 
     }
 
     const filePath = file.filename
-    const user = await User.updateOne({_id: req.id}, {avatar : filePath})
-    await user.save()
+    await User.updateOne({_id: req.id}, {avatar : filePath})
     res.status(200).json({message : "Avatar Changed Successfully"})
 })
 
@@ -135,7 +134,8 @@ Route.get('/user', authMiddlewares, async(req, res)=>{
     res.status(200).json({
         firstname : userExist.firstname,
         lastname : userExist.lastname,
-        balance : accountExist.balance
+        balance : accountExist.balance,
+        avatar : userExist.avatar
     })
 })
 
