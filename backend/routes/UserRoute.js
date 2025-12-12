@@ -1,11 +1,15 @@
 const express = require("express")
 const bcrypt = require("bcrypt");
-
+const multer = require("multer")
+const path = requir("path")
 const Route = express.Router()
 const { User, Account, SignInSchema, SignUpSchema, NameSchema, PasswordSchema } = require('../db')
 const { authMiddlewares } = require('../middlewares/middlewares')
 const { JWTtoken } = require('../utils/jwt')
+const upload = require("../multer/config")                  // multer config file
 
+
+// Signup Backend logic
 Route.post('/signup', async (req, res) => {
     const { firstname, lastname, email, password } = req.body
     const parsed = SignUpSchema.safeParse({ firstname, lastname, email, password })
@@ -29,7 +33,7 @@ Route.post('/signup', async (req, res) => {
     })
 
     const UserId = NewUser._id
-
+    // Auto Generating the Account wtih random Balance between  0 - 10,000.
     await  Account.create({
         userId : UserId,
         balance: 1 + (Math.random() * 10000)
@@ -107,6 +111,20 @@ Route.put('/updatepassword', authMiddlewares, async (req, res) => {
     res.status(200).json({ message: "Updated Successfully" })
 })
 
+// Updating logic for the Avatar
+Route.put('/updateAvatar', upload.single('avatar'), authMiddlewares, async(req, res)=>{
+    const file = req.file
+    if(!req.file){
+        return res.status(400).json({message : "Somthing went Wrong"})
+    }
+
+    const filePath = file.filename
+    const user = await User.updateOne({_id: req.id}, {avatar : filePath})
+    await user.save()
+    res.status(200).json({message : "Avatar Changed Successfully"})
+})
+
+// getting the user Account details
 Route.get('/user', authMiddlewares, async(req, res)=>{
     const userid = req.id
     const userExist = await User.findOne({_id : userid})
