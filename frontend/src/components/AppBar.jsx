@@ -85,8 +85,8 @@ function DropdownProfile({ navigate, firstname }) {
 function AvatarComponent({ exists, avatar, firstname }) {
   if (exists && avatar) {
     // Correctly using an expression inside the src attribute's curly braces
-    const imgSrc = `http://localhost:3000/api/v1/uploads/${avatar}`;
-    return <img src={imgSrc} alt="User Avatar" />;
+    const imgSrc = `http://localhost:3000/uploads/${avatar}`;
+    return <img src={imgSrc} alt="User Avatar" className='w-full h-full overflow-hidden rounded-full'/>;
   } else if (!exists && firstname && firstname.length > 0) {
     return <>{firstname[0]}</>;
   } else {

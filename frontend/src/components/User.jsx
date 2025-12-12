@@ -77,6 +77,8 @@ export default function User() {
 
 
 
+
+
     return (
         <div className='w-full flex flex-col justify-center my-5'>
             <div className='font-semibold text-xl sm:text-2xl'>List of Users</div>
@@ -92,10 +94,18 @@ export default function User() {
             {loading && <Skeleton />}
 
             {UserCurrent.map((user, idx) => {
+                // for avatar exists or not
+                const validExtension = ["jpg", "png", "jpeg"]
+                const exists = user?.avatar
+                    ? validExtension.some(ext => user.avatar.toLowerCase().endsWith(ext))
+                    : false 
+                console.log(user);
+                console.log(user.avatar)
+
                 return <div key={idx} className='w-full flex justify-between items-center mt-3'>
                     <div className='flex items-center w-full'>
                         <div className='rounded-full flex justify-center items-center w-10 h-10 bg-slate-200 font-medium'>
-                            {user.firstname[0].toUpperCase()}
+                            <AvatarComponent avatar={user.avatar} firstname={user.firstname} exists={exists} />
                         </div>
                         <div className='text-sm sm:text-md ml-2'>{user.firstname} {user.lastname}</div>
                     </div>
@@ -153,4 +163,16 @@ function Skeleton() {
             </div>
         ))}
     </div>
+}
+
+function AvatarComponent({ exists, avatar, firstname }) {
+    if (exists && avatar) {
+        // Correctly using an expression inside the src attribute's curly braces
+        const imgSrc = `http://localhost:3000/uploads/${avatar}`;
+        return <img src={imgSrc} alt="User Avatar" className='w-full h-full overflow-hidden rounded-full' />;
+    } else if (!exists && firstname && firstname.length > 0) {
+        return <>{firstname[0]}</>;
+    } else {
+        return <>?</>;
+    }
 }

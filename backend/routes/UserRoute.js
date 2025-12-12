@@ -158,6 +158,7 @@ Route.get('/bulk', async (req, res) => {
             email: user.email,
             firstname: user.firstname,
             lastname: user.lastname,
+            avatar : user.avatar,
             _id: user._id
         }))
     })
