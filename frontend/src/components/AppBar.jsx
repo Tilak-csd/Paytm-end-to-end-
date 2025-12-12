@@ -24,7 +24,7 @@ export default function AppBar({ firstname = "", lastname = "" }) {
             {/* Show firstname's first letter if it exists; otherwise show '?' to avoid undefined errors. */}
             {firstname?.[0] ?? "?"}
           </div>
-          {dropdown && <DropdownProfile navigate={navigate} />}
+          {dropdown && <DropdownProfile navigate={navigate} firstname={firstname}/>}
         </div>
         <div  className='rounded-md bg-black text-white font-medium text-sm sm:text-md py-2 px-3 cursor-pointer'
           onClick={() => {
@@ -41,12 +41,12 @@ export default function AppBar({ firstname = "", lastname = "" }) {
 
 
 
-function DropdownProfile({ navigate }) {
+function DropdownProfile({ navigate, firstname }) {
   return <div className='px-3 absolute top-13 rounded-2xl w-45 bg-gray-200 flex justify-center items-center flex-col'>
     <div  className="w-5 h-5 bg-gray-200 rotate-45 mt-[-.5rem]"></div>
     <div  className='w-full flex justify-start items-center text-gray-600 mb-3 cursor-pointer'
       onClick={() => {
-        navigate('/editavatar')
+        navigate(`/editavatar?firstname=${firstname}`)
       }}
     >
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
