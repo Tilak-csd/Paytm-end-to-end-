@@ -8,6 +8,7 @@ import SuccessTransfer from './pages/SuccessTransfer'
 import Home from './pages/Home'
 import EditUser from './pages/EditUser'
 import Changepassword from './pages/Changepassword'
+import ChangeAvatar from './pages/ChangeAvatar'
 import { RecoilRoot } from 'recoil'
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
             <Route path='/successtransfer' element={<SuccessTransfer />}></Route>
             <Route path='/edituser' element={<EditUser />} ></Route>
             <Route path='/changepassword' element={<Changepassword />} ></Route>
+            <Route path='/editavatar' element={<ChangeAvatar />} ></Route>
           </Routes>
         </BrowserRouter>
       </RecoilRoot>

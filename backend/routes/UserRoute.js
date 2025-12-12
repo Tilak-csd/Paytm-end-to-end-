@@ -1,7 +1,7 @@
 const express = require("express")
 const bcrypt = require("bcrypt");
 const multer = require("multer")
-const path = requir("path")
+const path = require("path")
 const Route = express.Router()
 const { User, Account, SignInSchema, SignUpSchema, NameSchema, PasswordSchema } = require('../db')
 const { authMiddlewares } = require('../middlewares/middlewares')
