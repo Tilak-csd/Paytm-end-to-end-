@@ -24,7 +24,8 @@ Route.post('/signup', async (req, res) => {
         firstname : firstname,
         lastname : lastname,
         email : email,
-        password : hasedPassword
+        password : hasedPassword,
+        avatar : firstname[0]
     })
 
     const UserId = NewUser._id

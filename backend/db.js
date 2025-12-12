@@ -18,7 +18,8 @@ const SignUpSchema = zod.object({
     firstname: zod.string(),
     lastname: zod.string(),
     email: zod.email(),
-    password: zod.string().min(8)
+    password: zod.string().min(8),
+    avatar : zod.string()
 })
 
 const NameSchema = zod.object({
@@ -35,6 +36,7 @@ const UserSchema = new mongoose.Schema({
     lastname: String,
     email: String,
     password: String,
+    avatar : String
 })
 
 
