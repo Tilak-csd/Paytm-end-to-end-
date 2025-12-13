@@ -2,6 +2,7 @@ const express = require("express")
 const bcrypt = require("bcrypt");
 const multer = require("multer")
 const path = require("path")
+const fs = require("fs")
 const Route = express.Router()
 const { User, Account, SignInSchema, SignUpSchema, NameSchema, PasswordSchema } = require('../db')
 const { authMiddlewares } = require('../middlewares/middlewares')
@@ -25,17 +26,17 @@ Route.post('/signup', async (req, res) => {
     const hasedPassword = await bcrypt.hash(password, 10)
 
     const NewUser = await User.create({
-        firstname : firstname,
-        lastname : lastname,
-        email : email,
-        password : hasedPassword,
-        avatar : firstname[0]
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        password: hasedPassword,
+        avatar: firstname[0]
     })
 
     const UserId = NewUser._id
     // Auto Generating the Account wtih random Balance between  0 - 10,000.
-    await  Account.create({
-        userId : UserId,
+    await Account.create({
+        userId: UserId,
         balance: 1 + (Math.random() * 10000)
     })
 
@@ -53,7 +54,7 @@ Route.post('/signup', async (req, res) => {
 })
 
 Route.post('/signin', async (req, res) => {
-    const {email, password } = req.body
+    const { email, password } = req.body
     const parsed = SignInSchema.safeParse({ email, password })
 
     if (!parsed.success) {
@@ -62,12 +63,12 @@ Route.post('/signin', async (req, res) => {
 
     const userExist = await User.findOne({ email })
     if (!userExist) {
-        return res.status(400).json({message: "User doesnot Exist."})
+        return res.status(400).json({ message: "User doesnot Exist." })
     }
 
     const isMatch = await bcrypt.compare(password, userExist.password)
-    if(!isMatch){
-        return res.status(500).json({message : "Password Don't Matched."})
+    if (!isMatch) {
+        return res.status(500).json({ message: "Password Don't Matched." })
     }
 
     try {
@@ -99,43 +100,65 @@ Route.put('/updateuser', authMiddlewares, async (req, res) => {
 Route.put('/updatepassword', authMiddlewares, async (req, res) => {
     const data = req.body
     console.log(data);
-    
+
     const parsed = PasswordSchema.safeParse(data)
     if (!parsed.success) {
         return res.status(411).json("Bad Inputs")
     }
     const newhasedPassword = await bcrypt.hash(data.password, 10)
     console.log(newhasedPassword);
-    
-    await User.updateOne({ _id: req.id }, {password : newhasedPassword})
+
+    await User.updateOne({ _id: req.id }, { password: newhasedPassword })
     res.status(200).json({ message: "Updated Successfully" })
 })
 
 // Updating logic for the Avatar
-Route.put('/updateAvatar', upload.single('avatar'), authMiddlewares, async(req, res)=>{
+Route.put('/updateAvatar', upload.single('avatar'), authMiddlewares, async (req, res) => {
     const file = req.file
-    if(!req.file){
-        return res.status(400).json({message : "Somthing went Wrong"})
+    if (!req.file) {
+        return res.status(400).json({ message: "Somthing went Wrong" })
+    }
+
+    const user = await User.findById(req.id)
+
+    if (!user) {
+        return res.status(400).json({ message: "User not found." })
+    }
+
+    const IsImageAvatar = /\.(jpg|png|jpe|svg|gif)$/i.test(user.avatar)
+    if (IsImageAvatar) {
+        const oldAvatarPath = path.join(
+            process.cwd(), "uploads", user.avatar
+        );
+
+        if (fs.existsSync(oldAvatarPath)) {
+            try {
+                fs.unlinkSync(oldAvatarPath)
+            } catch (err) {
+                console.error("Failed to delete the image", err)
+            }
+        }
     }
 
     const filePath = file.filename
-    await User.updateOne({_id: req.id}, {avatar : filePath})
-    res.status(200).json({message : "Avatar Changed Successfully"})
+    user.avatar = filePath
+    await user.save()
+    res.status(200).json({ message: "Avatar Changed Successfully" })
 })
 
 // getting the user Account details
-Route.get('/user', authMiddlewares, async(req, res)=>{
+Route.get('/user', authMiddlewares, async (req, res) => {
     const userid = req.id
-    const userExist = await User.findOne({_id : userid})
-    const accountExist = await Account.findOne({userId: userid})
-    if(!userExist && !accountExist){
+    const userExist = await User.findOne({ _id: userid })
+    const accountExist = await Account.findOne({ userId: userid })
+    if (!userExist && !accountExist) {
         return res.status(400).json("User doesn't exist")
     }
     res.status(200).json({
-        firstname : userExist.firstname,
-        lastname : userExist.lastname,
-        balance : accountExist.balance,
-        avatar : userExist.avatar
+        firstname: userExist.firstname,
+        lastname: userExist.lastname,
+        balance: accountExist.balance,
+        avatar: userExist.avatar
     })
 })
 
@@ -158,7 +181,7 @@ Route.get('/bulk', async (req, res) => {
             email: user.email,
             firstname: user.firstname,
             lastname: user.lastname,
-            avatar : user.avatar,
+            avatar: user.avatar,
             _id: user._id
         }))
     })
