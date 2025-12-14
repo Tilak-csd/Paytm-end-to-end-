@@ -10,7 +10,7 @@ export default function AppBar({ firstname = "", lastname = "", avatar = "" }) {
   const exists = validExtension.some(ext => avatar.endsWith(ext))
   return (
     <div  className='flex justify-between w-full shadow h-15 px-3 sm:px-10'>
-      <div  className='flex flex-col justify-center h-full text-xl sm:text-2xl font-medium cursor-pointer'>
+      <div onClick={()=> navigate('/')} className='flex flex-col justify-center h-full text-xl sm:text-2xl font-medium cursor-pointer'>
         PayTM App
       </div>
       <div  className='flex items-center gap-2'>
