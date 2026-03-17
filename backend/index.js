@@ -13,5 +13,10 @@ app.use('/uploads',  express.static(path.join(__dirname, "uploads")))
 
 app.use('/api/v1', rootRoute)
 
+app.get("/", (req, res) => {
+  res.json({ message: "Backend is running!" });
+});
 app.listen(3000, ()=>{console.log("I am live.");
 })
+
+module.exports = app
