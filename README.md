@@ -1,4 +1,4 @@
-# Paytm‑end‑to‑end
+# Tilak Web Pay - TWP
 
 A full‑stack implementation of a payment-wallet‑style web application, inspired by Paytm.  
 The project includes both frontend (user UI) and backend (API + database) — enabling user registration, authentication, balance management, and payment/transfer flows.
